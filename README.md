@@ -34,7 +34,7 @@ $
 
 
 ```
-	For debuggin the application please add the below line to environmet:
+	For debuggin the application please add the below line to environment:
 	
 	set _JAVA_OPTIONS=-Dmagik.html5.debug=3050
 	

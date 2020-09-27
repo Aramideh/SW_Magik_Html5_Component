@@ -10,6 +10,8 @@ The API is very simple, but also very powerful: there are only three functions e
 This example illustrates the implementation of a basic button and input using HTML5 technologies. ( GE Documentation )
 
 
+
+
 ![](https://github.com/Aramideh/sw_Magik_Html5_Component/blob/master/screenshot.png)
 
 
@@ -20,9 +22,7 @@ This example illustrates the implementation of a basic button and input using HT
 *
 ```
 _block 
-
 	my_html5_example.new()
-	
 _endblock 
 $
 
@@ -31,18 +31,17 @@ $
 
 ### Author Notes
 
-
  This modules is tested on Smallworld 5.1.9 (Long support )
-
 
 ```
 	For debuggin the application please add the below line to environmet:
 	
 	set _JAVA_OPTIONS=-Dmagik.html5.debug=3050
 	
-	
 	after loading the application you can debug with chrome, go to address localhost:3050 
 ```	
+
+
 
 ### Authors
 * [**Sadeq Aramideh**](https://github.com/Aramideh)

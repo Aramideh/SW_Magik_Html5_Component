@@ -1,0 +1,70 @@
+#% text_encoding = iso8859_1
+
+remex(:my_html5_example)
+$
+
+
+_pragma(classify_level=basic , topic=html5_component_example)
+def_slotted_exemplar(:my_html5_example,
+	## 
+	## Example to demonstrate HTML5 component using Chromium Embedded Framework (CEF)
+	## 
+	{
+		{:frame, _unset},
+		{:browser, _unset}
+	},
+	{},
+	{_class |com.gesmallworld.magik.language.MagikFinalisable|})
+$
+
+
+_pragma(classify_level=basic , topic=html5_component_example)
+_method my_html5_example.new()
+	## 
+	## 
+
+	_return _self.init()
+	
+_endmethod
+$
+
+_pragma(classify_level=restricted , topic=html5_component_example)
+_private _method my_html5_example.init()
+	## 
+	## 
+
+	(w,h) << !window_system!.screen_size_pixels()
+	
+	.frame << frame.new("HTML5 CEF example")
+	.frame.width << (w/2).rounded
+	.frame.height << (h/2).rounded
+	
+	#.browser << html5_component.new(.frame, url)
+	.browser << my_html5_component.new(.frame)
+	
+
+	.frame.position << frame_position_manager.get_position_given_dimensions(.frame.width, .frame.height, pixel_coordinate.new( 100 , 150 ))
+	
+	.frame.activate()
+	.browser.post_activation()
+
+	_self.have_post_mortem(_true)
+
+	
+	_return _self 			 
+
+_endmethod
+$
+
+_pragma(classify_level=restricted ,topic=html5_component_example)
+_private _method my_html5_example.post_mortem()
+	## 
+	## 
+
+	.frame.deactivate()
+	.browser.on_deactivation()
+
+	.browser << .frame << _unset
+	
+_endmethod
+$

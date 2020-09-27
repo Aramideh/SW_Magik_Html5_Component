@@ -1,0 +1,131 @@
+#% text_encoding = iso8859_1
+
+remex(:my_html5_component)
+$
+
+_pragma(classify_level=basic, topic=html5_component_example)
+def_slotted_exemplar(:my_html5_component,
+	## 
+	## Example to demonstrate HTML5 component using Chromium Embedded Framework (CEF)
+	## 
+	{
+		{ :owner , _unset }
+	},
+	{:html5_component}
+)
+$
+
+_pragma(classify_level=advanced, topic=html5_component_example)
+my_html5_component.define_shared_constant(:default_url,
+	## 
+	## Default URL to display
+	##
+	"magik://magik.gesmallworld.com/my_html5_example/index.html", :private
+	)
+$
+
+
+_pragma(classify_level=basic, topic=html5_component_example)
+_method my_html5_component.new(parent, _optional url , _gather properties) 
+
+	.owner << parent
+
+	>> _clone.init(parent, url.default( _self.default_url ) , properties) 
+_endmethod 
+$
+
+ 
+_pragma(classify_level=basic, topic=html5_component_example)
+_method my_html5_component.button_clicked(text)
+
+	write( "Html send a message to Magik " , %tab , text.write_string )
+	
+	# returning result to html page
+
+	_return "Hi Html this is Magik speaking to you, the text you send to me is"+%tab+ text.write_string.default("you didnt fill the text box!")
+_endmethod
+$
+
+
+_pragma(classify_level=basic, topic=html5_component_example)
+_method my_html5_component.make_broadcast()
+	##  Function: 
+	## Arguments: 
+	##   Returns: 
+	# --- body	
+	# sending some event to html page
+	write("Html is asking for a brodcast...")
+	_self.send_event("my_event_message()", " Hi HTML! This _is Magik! " ) 
+
+_endmethod
+
+
+_pragma(classify_level=basic, topic=my_html5_component )
+_method my_html5_component.make_request()
+	##  Function: 
+	## Arguments: 
+	##   Returns: 
+	# --- body ---
+	
+
+	_local  me  << _self 
+	_local owner << .owner
+	_proc @run_request( request_type , data , timeout  )
+		
+		_import me , owner
+		response << me.send_request( request_type ,data , timeout )
+		write ( "------------", %tab , response  )
+		_local result <<  _if ( response << me.send_request( request_type ,data , timeout ) ) _is  _unset _orif 
+								response.write_string.eq?("") _orif response.write_string.empty?
+						_then 
+							>> "You didnt fill the text box on me!"
+						_else 
+							>> response
+						_endif 		
+
+		
+		owner.show_alert ( "".concatenation( "You requested text box value from Html, His replay is : " , result  ) )
+
+	_endproc.fork_at( _thisthread.vm_priority - 1, "get_user_input()", "Some request data by sadeq", 3000 )
+
+
+
+_endmethod
+$
+
+
+_pragma(classify_level=basic, topic=my_html5_component )
+_method my_html5_component.sort_array()
+
+	_local  me  << _self 
+	_local owner << .owner
+	_local json_data << json_encoder.new().generate_string({1, 4, 82, 9, -3})
+
+	sorted_json_data << _self.send_request('sort()', json_data , 3000)
+
+	_proc @run_request( request_type , data , timeout  )
+		_import me , owner
+		_local sorted_json_data <<   me.send_request( request_type ,data , timeout ) 
+		
+		write(" Magik Requested HTML to sort some data as json format, the result is as follows")
+		_local parsed_sorted_data << json_decoder.new().parse_string(sorted_json_data)
+		result << ""				
+		_for element _over  parsed_sorted_data.elements()
+		_loop # @ --- loop name ---
+			# --- loop body ---
+			write( element )
+			result +<< element.write_string + %tab 
+		_finally
+			# --- last iteration ---
+		_endloop
+
+		owner.show_alert ( "".concatenation ("requested to sort the values 1, 4, 82, 9, -3", " the sorted values are :" , result.write_string ) )
+
+	_endproc.fork_at( _thisthread.vm_priority - 1, "sort()", json_data, 3000 )
+
+	
+
+_endmethod
+$
+
+

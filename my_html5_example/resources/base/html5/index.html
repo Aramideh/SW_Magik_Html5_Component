@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+     <head>
+		<meta charset="UTF-8">
+        <title>Magik HTML5_Component Example : Sadeq Aramideh</title>
+		<script src="resource://magik.gesmallworld.com/jquery.js"></script>
+		<script src="resource://magik.gesmallworld.com/magik.js"></script>
+		<link rel="stylesheet" href="style.css">
+     </head>
+
+   <body>
+   
+	 <div id="gridWrapper"> 
+
+	  <header>
+		<h2>Magik HTML5_Component Example</h2>
+	  </header>
+
+
+		<div id="alerts" class="alert" style="display:none;" >
+		  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+		  <strong>Alert !</strong> <label id="alert_label"></label>
+		</div>
+
+		<input id="my-input" placeholder="Please Type Something">	  
+
+  
+	  <div class="flipBtnWrapper">
+  		<p>#1 Sends the value of above text box to Magik and then receives the response </p>
+		</p>
+		
+		<input id="my-button_call_magik" class="flipBtn_checkbox" type="checkbox"/>
+		<div class="flipBtn demo1">
+		  <div class="flipBtn_face flipBtn_back demo1"></div>
+		  <div class="flipBtn_face flipBtn_mid demo1"></div>
+		  <div class="flipBtn_face flipBtn_front demo1"></div>
+		</div>
+	  </div>
+
+
+	  <div class="flipBtnWrapper">
+		<p>#2 Click me so I can have a talk with Magik and tell him to send a broadcast to me! i wont reply back to Magik though! </p>
+		<label id="magik_broadcast_label"></label>
+		<input id="my-button_ask_magik_to_send_broadcast_to_browser" class="flipBtn_checkbox" type="checkbox"/>
+		<div class="flipBtn demo2">
+		  <div class="flipBtn_face flipBtn_back demo2"></div>
+		  <div class="flipBtn_face flipBtn_mid demo2"></div>
+		  <div class="flipBtn_face flipBtn_front demo2"></div>
+		</div>
+	  </div>
+
+
+	  <div class="flipBtnWrapper2">
+		<p>#3 Click me so I can have a talk with Magik and tell him to send a request to me! I promise that Magik will receive a response from me in 3 seconds!</p>
+		<input id="my-button_ask_magik_to_send_request_to_browser" class="flipBtn_checkbox" type="checkbox"/>
+		<div class="flipBtn demo3">
+		  <div class="flipBtn_face flipBtn_back demo3"></div>
+		  <div class="flipBtn_face flipBtn_mid demo3"></div>
+		  <div class="flipBtn_face flipBtn_front demo3"></div>
+		</div>
+	  </div>
+	  
+	  
+	  
+	  
+	  	<div class="flipBtnWrapper2">
+		<p>#4 Click me so I can have a talk with Magik and tell him to send a request to me to sort a json (1, 4, 82, 9, -3 )! I promise that Magik will receive a response from me in 3 seconds! with parsed json</p>
+		<input id="my-button_ask_magik_to_send_request_to_browser_to_parse_a_json" class="flipBtn_checkbox" type="checkbox"/>
+		<div class="flipBtn demo4">
+		  <div class="flipBtn_face flipBtn_back demo4"></div>
+		  <div class="flipBtn_face flipBtn_mid demo4"></div>
+		  <div class="flipBtn_face flipBtn_front demo4"></div>
+		</div>
+	  </div>
+	  
+	  
+		 <script>
+		 
+			<!-- 1 -- >
+				$(function () {
+					 $('#my-button_call_magik').click(function () {
+						  $.magik('button_clicked()', $('#my-input').val(), function (err, data) {
+							  showBroadcastDiv(  'Html calling Magik! ' , data );
+							  
+						  });				  
+					  });
+				});
+				
+			
+			
+			
+			
+			
+			
+
+			<!-- 2 -- >
+			
+				/** Execute make_brodcast() method on my_html5_coponent class,
+					This will send a broadcast to html page which will be intercepted by the $.onMagik('my_event_message()
+				**/
+				
+				$(function () {
+					 $('#my-button_ask_magik_to_send_broadcast_to_browser').click(function () {
+						  $.magik('make_broadcast()', "",function (err, data) {
+						  });				  
+					  });
+				});
+				
+				
+				/** Magik will execute the make_broadcast() method that will cal send_event method 
+				    and Html will execute below function  when receiving the event (registered for my_event_message event)
+				**/	
+				$.onMagik('my_event_message()', function (err, data) {	
+
+					 console.log(data);
+					 showBroadcastDiv(  'A bradcast from Magik received!' , data );
+				});
+
+				function showBroadcastDiv( label  , data ) {
+						document.getElementById('alert_label').innerHTML = String (label + data );
+						document.getElementById('alerts').style.display = "block"; }
+
+
+
+			
+			
+			
+			
+			
+			
+			
+			<!-- 3 -- >		
+			
+				/**
+				$.onMagikRequest('get_user_input()', (data, callback) => {
+					
+				   callback($('#my-input').val());
+
+				});
+
+				**/ 
+				
+				/** Execute make_request() method on my_html5_coponent class,
+					This will send a request to html page which will be intercepted by the $.onMagik('make_request()
+					Html will reply back to Magik, with the user Input , Check Cli in magik"
+				**/
+				
+				$(function () {
+					 $('#my-button_ask_magik_to_send_request_to_browser').click(function () {
+						  $.magik('make_request()', "",function (err, data) {
+						  });				  
+					  });
+				});
+						
+						
+				$.onMagikRequest('get_user_input()', data => {
+				    return Promise.resolve($('#my-input').val());
+				});
+				
+				
+				
+				
+				
+				
+				
+				
+			<!-- 4 -- >
+			
+				$(function () {
+					 $('#my-button_ask_magik_to_send_request_to_browser_to_parse_a_json').click(function () {
+						  $.magik('sort_array()', "",function (err, data) {
+						  });				  
+					  });
+				});
+						
+						
+				$.onMagikRequest('sort()', function (data, callback) {
+
+					const parsedData = JSON.parse(data);
+
+					parsedData.sort();
+
+					callback(JSON.stringify(parsedData));
+
+				});
+
+			
+
+			
+		 </script>
+	 
+	 </div>
+	 
+  </body>
+  
+</html>
+

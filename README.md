@@ -11,7 +11,7 @@ This example illustrates the implementation of a basic button and input using HT
 
 This repository covers some basic tasks with the HTML5 Component API, Sending commands from HTML to Magik, Broadcasting Messages from magik to HTML, Magik Requesting Data from HTML and communicating Magik and HTML with JSON data.
 
-For more information please refer to the HTML5 Component documentation on https://smallworld.gedigitalenergy.com/docs/sw52/en/swDocs5.htm#../Subsystems/AppDev/Content/SWIFTDev/HTML5Cpt.htm
+For more information please refer to the Smallworld online documentation.
 
 
 

@@ -1,4 +1,4 @@
-# GE Smallworld Magik Html5_Component Example 
+# GE Smallworld Magik HTML5 Component API Example 
 
 ### Introduction
 

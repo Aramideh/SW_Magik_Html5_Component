@@ -34,11 +34,11 @@ $
 
 
 ```
-	For debuggin the application please add the below line to environment:
+	For debugging the application please add the below line to the environment.bat:
 	
 	set _JAVA_OPTIONS=-Dmagik.html5.debug=3050
 	
-	after loading the application you can debug with chrome, go to address localhost:3050 
+	after loading the application you can start debugging with chrome ( ONLY CHROME! ), go to address localhost:3050 
 ```	
 
 
@@ -47,7 +47,7 @@ $
 
  * This modules is tested on Smallworld 5.1.9 (Long support )
 	
- * I know that HTML look is messy! but it shows how the API works, that is the important issue here! :)
+ * I know that HTML look is messy! but it shows how the API works and that is the important issue here! :)
 
 
 
